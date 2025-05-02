@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo
+spec:
+  volumes:
+    - name: html-volume
+      emptyDir: {}
+
+  containers:
+  - name: nginx
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+    volumeMounts:
+      - name: html-volume
+        mountPath: /usr/share/nginx/html
+  initContainers:
+  - name: setup
+    image: busybox:latest
+    command: ["/bin/sh", "-c"]
+    args: ["mkdir -p /usr/share/nginx/html && touch /usr/share/nginx/html/index.html && echo 'Hello World' > /usr/share/nginx/html/index.html"]
+    volumeMounts:
+      - name: html-volume
+        mountPath: /usr/share/nginx/html
