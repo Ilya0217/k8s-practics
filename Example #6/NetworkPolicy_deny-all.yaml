@@ -1,0 +1,10 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all
+  namespace: dev2
+spec: 
+  podSelector: {} # Применяется ко всем Pods в Namespace dev2
+  policyTypes:
+  - Ingress # Блокировка входящего трафика
+  ingress: [] # Нет разрешающих правил

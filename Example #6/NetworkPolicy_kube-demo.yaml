@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kube-demo
+  namespace: dev2  # Применяется к Pod'ам в dev2
+spec:
+  podSelector: {}  # Все Pod'ы в dev2
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:  # Разрешаем трафик из неймспейса dev1
+        matchLabels:
+          kubernetes.io/metadata.name: dev1
+    ports:  # Разрешаем только порт 80
+    - protocol: TCP
+      port: 80
